@@ -1,64 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:news_brief/app/widgets/article_card.dart';
+import 'package:news_brief/domain/repository/model/article.dart';
 
-class ArticleScreen extends StatefulWidget {
-  const ArticleScreen({Key? key});
+class ArticleScreen extends StatelessWidget {
+  final Article article;
 
-  @override
-  State<ArticleScreen> createState() => _ArticleScreenState();
-}
+  const ArticleScreen({Key? key, required this.article}) : super(key: key);
 
-class _ArticleScreenState extends State<ArticleScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Details',
-          ),
+          title: const Text('Details'),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                height:300,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE7E7E7),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(bottom: 20),
+              if (article.mediaType == 'image' && article.url != null)
+                Image.network(article.url!),
+              const SizedBox(height: 20),
+              Text(
+                article.title ?? 'No Title',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              Container(
-                width: 200,
-                height:30,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE7E7E7),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.only(bottom: 20),
-              ),
-              Container(
-                width: double.infinity,
-                child: Column(
-                    children: List.generate(
-                      10,
-                      (index) => Container(
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE7E7E7),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        margin: const EdgeInsets.only(bottom: 5),
-                        width: double.infinity, // Прямоугольник растягивается на всю ширину
-                      ),
-                    ),
-                ),
+              const SizedBox(height: 10),
+              Text(
+                article.explanation ?? 'No Description',
+                style: TextStyle(fontSize: 16),
               ),
             ],
           ),

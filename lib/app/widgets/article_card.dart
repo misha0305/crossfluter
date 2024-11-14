@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
- import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:news_brief/domain/repository/model/article.dart';
 
 class ArticleCard extends StatelessWidget {
@@ -14,7 +14,8 @@ class ArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.go('/home/article/${article.date}');  
+        // Здесь мы передаем объект article через аргументы
+        context.go('/home/article', extra: article);
       },
       borderRadius: BorderRadius.circular(5),
       child: Row(
@@ -53,4 +54,3 @@ class ArticleCard extends StatelessWidget {
     );
   }
 }
-
